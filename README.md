@@ -33,6 +33,8 @@ Uma ferramenta frontend simples para conversão e manipulação de Base64, GZip 
 4. Clique em `Converter`.
 5. Copie o resultado usando `Copiar saída` ou faça download do PDF gerado.
 
+[Veja online](https://silvairsoares.github.io/B64Tools/)
+
 ## Dependências
 
 - [pako](https://github.com/nodeca/pako) — biblioteca usada para compressão/descompressão GZip no navegador.
