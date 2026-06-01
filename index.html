@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Base64Tools - Conversão Base64 / GZip / PDF</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>B64Tools</h1>
+            <p>Ferramenta estática para codificar e decodificar texto, Base64, GZip e PDF diretamente no navegador.</p>
+        </header>
+
+        <div class="panel">
+            <div class="split-grid">
+                <div class="pane pane-left">
+                    <div class="field-row">
+                        <div class="field-group">
+                            <label for="operation">Operação</label>
+                            <select id="operation">
+                                <option value="text-to-base64">Text → Base64</option>
+                                <option value="base64-to-text">Base64 → Text</option>
+                                <option value="text-to-base64-url">Text → Base64 URL-safe</option>
+                                <option value="base64-url-to-text">Base64 URL-safe → Text</option>
+                                <option value="hex-to-base64">Hex → Base64</option>
+                                <option value="base64-to-hex">Base64 → Hex</option>
+                                <option value="text-to-data-uri">Text → Data URI</option>
+                                <option value="data-uri-to-base64">Data URI → Base64</option>
+                                <option value="base64-to-mime">Base64 → MIME Base64</option>
+                                <option value="mime-to-base64">MIME/PEM → Base64</option>
+                                <option value="text-to-base64-utf16">Text → Base64 UTF-16</option>
+                                <option value="base64-to-text-utf16">Base64 UTF-16 → Text</option>
+                                <option value="text-to-base64-utf32">Text → Base64 UTF-32</option>
+                                <option value="base64-to-text-utf32">Base64 UTF-32 → Text</option>
+                                <option value="text-to-gzip-base64">Text → Base64Gzip</option>
+                                <option value="gzip-base64-to-text">Base64Gzip → Text</option>
+                                <option value="pdf-to-base64">PDF → Base64</option>
+                                <option value="base64-to-pdf">Base64 → PDF</option>
+                                <option value="pdf-to-gzip-base64">PDF → Base64Gzip</option>
+                                <option value="gzip-base64-to-pdf">Base64Gzip → PDF</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="outputFormat">Formato de saída</label>
+                            <select id="outputFormat">
+                                <option value="text">Text</option>
+                                <option value="json">JSON</option>
+                                <option value="xml">XML</option>
+                                <option value="yaml">YAML</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="actions action-row">
+                        <button id="convertButton" type="button">Converter</button>
+                    </div>
+
+                    <div id="inputTextGroup" class="field-group">
+                        <label for="inputText">Entrada</label>
+                        <textarea id="inputText" placeholder="Cole texto, Base64 ou Base64Gzip aqui..."></textarea>
+                    </div>
+
+                    <div id="inputFileGroup" class="field-group hidden">
+                        <label for="inputFile">Arquivo PDF</label>
+                        <input type="file" id="inputFile" accept="application/pdf" />
+                        <small>Use um arquivo PDF para codificar em Base64 ou Base64Gzip.</small>
+                    </div>
+                </div>
+
+                <div class="pane pane-right">
+                    <div class="field-group output-group">
+                        <label for="outputText">Saída</label>
+                        <textarea id="outputText" style="height: 100%;" readonly wrap="off" placeholder="Resultado será exibido aqui..."></textarea>
+                    </div>
+
+                    <div class="actions output-actions">
+                        <button id="copyButton" type="button">Copiar saída</button>
+                        <button id="clearButton" type="button">Limpar</button>
+                    </div>
+
+                    <div id="previewPanel" class="preview-panel hidden">
+                        <div class="preview-header">
+                            <span>Pré-visualização de PDF</span>
+                            <a id="downloadLink" href="#" download="arquivo.pdf">Download do PDF</a>
+                        </div>
+                        <iframe id="pdfPreview" title="Pré-visualização de PDF"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="notes">
+            <h2>Como usar</h2>
+            <ul>
+                <li><strong>Text / Base64:</strong> converte texto UTF-8 em Base64 ou vice-versa.</li>
+                <li><strong>Text / Base64Gzip:</strong> comprime texto em GZip antes de codificar em Base64, ou descomprime após decodificar.</li>
+                <li><strong>PDF / Base64:</strong> codifica arquivos PDF em Base64 ou decodifica Base64 para arquivo PDF.</li>
+                <li><strong>PDF / Base64Gzip:</strong> comprime o PDF em GZip e codifica em Base64, ou decodifica e descomprime para PDF.</li>
+            </ul>
+            <p>Esta ferramenta usa a biblioteca <a href="https://github.com/nodeca/pako" target="_blank" rel="noopener noreferrer">pako</a> para compressão/descompressão GZip.</p>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
