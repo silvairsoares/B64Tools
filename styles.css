@@ -84,9 +84,11 @@ p {
 
 #outputText {
     min-height: 260px;
-    white-space: pre;
+    white-space: pre-wrap;
     overflow: auto;
     resize: vertical;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .pane-right .preview-panel {
