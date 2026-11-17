@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Base64Tools - Conversão Base64 / GZip / PDF</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>B64Tools</h1>
-            <p>Ferramenta estática para codificar e decodificar texto, Base64, GZip e PDF diretamente no navegador.</p>
+            <p>Ferramenta para codificação e decodificação de texto, Base64, GZip e PDF diretamente no navegador.</p>
         </header>
 
         <div class="panel">
@@ -54,10 +56,6 @@
                         </div>
                     </div>
 
-                    <div class="actions action-row">
-                        <button id="convertButton" type="button">Converter</button>
-                    </div>
-
                     <div id="inputTextGroup" class="field-group">
                         <label for="inputText">Entrada</label>
                         <textarea id="inputText" placeholder="Cole texto, Base64 ou Base64Gzip aqui..."></textarea>
@@ -68,12 +66,18 @@
                         <input type="file" id="inputFile" accept="application/pdf" />
                         <small>Use um arquivo PDF para codificar em Base64 ou Base64Gzip.</small>
                     </div>
+
+                    <div class="actions action-row">
+                        <button id="convertButton" type="button">Converter</button>
+                    </div>
+
                 </div>
 
                 <div class="pane pane-right">
                     <div class="field-group output-group">
                         <label for="outputText">Saída</label>
-                        <textarea id="outputText" style="height: 100%;" readonly wrap="soft" placeholder="Resultado será exibido aqui..."></textarea>
+                        <textarea id="outputText" style="height: 100%;" readonly wrap="soft"
+                            placeholder="Resultado será exibido aqui..."></textarea>
                     </div>
 
                     <div class="actions output-actions">
@@ -92,20 +96,79 @@
             </div>
         </div>
 
-        <section class="notes">
+                <section class="notes">
             <h2>Como usar</h2>
-            <ul>
-                <li><strong>Text / Base64:</strong> converte texto UTF-8 em Base64 ou vice-versa.</li>
-                <li><strong>Text / Base64Gzip:</strong> comprime texto em GZip antes de codificar em Base64, ou descomprime após decodificar.</li>
-                <li><strong>PDF / Base64:</strong> codifica arquivos PDF em Base64 ou decodifica Base64 para arquivo PDF.</li>
-                <li><strong>PDF / Base64Gzip:</strong> comprime o PDF em GZip e codifica em Base64, ou decodifica e descomprime para PDF.</li>
-            </ul>
-            <p>Esta ferramenta usa a biblioteca <a href="https://github.com/nodeca/pako" target="_blank" rel="noopener noreferrer">pako</a> para compressão/descompressão GZip.</p>
-            <p><a href="https://github.com/silvairsoares/B64Tools" target="_blank" rel="noopener noreferrer">Link do projeto no GitHub</a></p>
+            <p>Selecione a operação desejada, insira o conteúdo no campo de entrada e clique em <strong>Converter</strong>. O resultado aparecerá no painel à direita.</p>
+            
+            <div class="notes-grid">
+                <div class="note-category">
+                    <h3>Texto e Base64 (Padrão)</h3>
+                    <ul>
+                        <li><strong>Text → Base64:</strong> Codifica um texto UTF-8 em uma string Base64 padrão.</li>
+                        <li><strong>Base64 → Text:</strong> Decodifica uma string Base64 de volta para texto legível (UTF-8).</li>
+                    </ul>
+                </div>
+
+                <div class="note-category">
+                    <h3>Variantes de Base64</h3>
+                    <ul>
+                        <li><strong>Text → Base64 URL-safe:</strong> Codifica o texto substituindo os caracteres <code>+</code> e <code>/</code> por <code>-</code> e <code>_</code>, e remove o preenchimento com <code>=</code>. Ideal para URLs.</li>
+                        <li><strong>Base64 URL-safe → Text:</strong> Reverte a operação URL-safe para texto original.</li>
+                        <li><strong>Base64 → MIME Base64:</strong> Formata uma string Base64 em linhas de até 76 caracteres (padrão de e-mails).</li>
+                        <li><strong>MIME/PEM → Base64:</strong> Remove quebras de linha e cabeçalhos (como <code>-----BEGIN...</code>) de arquivos PEM/MIME, deixando apenas o Base64 puro.</li>
+                    </ul>
+                </div>
+
+                <div class="note-category">
+                    <h3>Hexadecimal e Data URI</h3>
+                    <ul>
+                        <li><strong>Hex → Base64:</strong> Converte uma representação em string hexadecimal para bytes e, em seguida, para Base64.</li>
+                        <li><strong>Base64 → Hex:</strong> Converte o conteúdo binário do Base64 em uma string hexadecimal legível.</li>
+                        <li><strong>Text → Data URI:</strong> Cria uma URI de dados completa (ex: <code>data:text/plain;base64,...</code>) a partir do texto.</li>
+                        <li><strong>Data URI → Base64:</strong> Extrai apenas a parte codificada em Base64 de uma URI de dados fornecida.</li>
+                    </ul>
+                </div>
+
+                <div class="note-category">
+                    <h3>Codificações UTF Especiais</h3>
+                    <ul>
+                        <li><strong>Text → Base64 UTF-16:</strong> Codifica o texto usando a codificação de caracteres UTF-16 antes de converter para Base64.</li>
+                        <li><strong>Base64 UTF-16 → Text:</strong> Lê os bytes do Base64 interpretando-os como caracteres UTF-16.</li>
+                        <li><strong>Text → Base64 UTF-32:</strong> Codifica o texto usando a codificação de caracteres UTF-32 antes de converter para Base64.</li>
+                        <li><strong>Base64 UTF-32 → Text:</strong> Lê os bytes do Base64 interpretando-os como caracteres UTF-32.</li>
+                    </ul>
+                </div>
+
+                <div class="note-category">
+                    <h3>Compressão GZip</h3>
+                    <ul>
+                        <li><strong>Text → Base64Gzip:</strong> Comprime o texto usando o algoritmo GZip e depois codifica o resultado em Base64.</li>
+                        <li><strong>Base64Gzip → Text:</strong> Decodifica o Base64, descomprime o GZip e retorna o texto original.</li>
+                    </ul>
+                </div>
+
+                <div class="note-category">
+                    <h3>Manipulação de Arquivos PDF</h3>
+                    <ul>
+                        <li><strong>PDF → Base64:</strong> Lê um arquivo PDF do seu computador e o codifica integralmente em Base64.</li>
+                        <li><strong>Base64 → PDF:</strong> Decodifica uma string Base64 e gera um arquivo PDF para download e pré-visualização.</li>
+                        <li><strong>PDF → Base64Gzip:</strong> Lê o PDF, comprime seus dados com GZip e gera uma string Base64 otimizada.</li>
+                        <li><strong>Base64Gzip → PDF:</strong> Decodifica o Base64, descomprime os dados GZip e reconstrói o arquivo PDF original.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="notes-footer">
+                Esta ferramenta usa a biblioteca <a href="https://github.com/nodeca/pako" target="_blank" rel="noopener noreferrer">pako</a> para compressão/descompressão GZip em tempo real no navegador. Todo o processamento é feito localmente, garantindo a privacidade dos seus dados.
+            </p>
+            <p class="notes-footer">
+                <a href="https://github.com/silvairsoares/B64Tools" target="_blank" rel="noopener noreferrer">Acesse o projeto no GitHub</a>
+            </p>
         </section>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
