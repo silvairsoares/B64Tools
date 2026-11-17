@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-    max-width: 960px;
+    max-width: 1100px; /* Aumentado um pouco para melhor respiro, igual à imagem */
     margin: 0 auto;
     padding: 24px;
 }
@@ -39,29 +39,28 @@ p {
     background: #ffffff;
     border: 1px solid #d9e2ec;
     border-radius: 18px;
-    padding: 22px;
+    padding: 24px;
     box-shadow: 0 16px 40px rgba(16, 42, 67, 0.08);
 }
 
 .split-grid {
-    display: flex;
-    gap: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide igualmente em duas colunas */
+    gap: 32px;
     align-items: stretch;
 }
 
 .pane {
-    flex: 1;
-    min-width: 320px;
-    min-height: 520px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    height: 100%; /* Ocupa toda a altura disponível */
 }
 
 .field-row {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
+    margin-bottom: 18px;
 }
 
 .field-row .field-group {
@@ -69,50 +68,16 @@ p {
     min-width: 140px;
 }
 
-.pane-right {
-    max-width: 640px;
-    display: flex;
-    flex-direction: column;
-}
-
-.pane-right .output-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
-
-#outputText {
-    min-height: 260px;
-    white-space: pre-wrap;
-    overflow: auto;
-    resize: vertical;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-
-.pane-right .preview-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 12px;
-}
-
-.output-actions {
-    margin-top: auto;
-    align-self: flex-start;
-}
-
 .field-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 0;
 }
 
 label {
     font-weight: 700;
     font-size: 0.95rem;
+    color: #1a1a1a;
 }
 
 select,
@@ -125,47 +90,88 @@ input[type="file"] {
     background: #f8fbff;
     font: 1rem inherit;
     color: #102a43;
+    outline: none;
+}
+
+select:focus,
+textarea:focus,
+input[type="file"]:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 textarea {
-    min-height: 220px;
     resize: vertical;
+    font-family: monospace; /* Opcional: melhora a leitura de códigos */
 }
 
+/* --- COLUNA ESQUERDA --- */
 .pane-left #inputTextGroup {
-    flex: 1;
+    flex: 1; /* Faz o grupo crescer para ocupar o espaço vazio */
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    margin-bottom: 18px;
 }
 
 .pane-left #inputTextGroup textarea {
-    min-height: 260px;
-    resize: vertical;
+    flex: 1; /* Faz o textarea preencher o grupo */
+    min-height: 250px;
 }
 
-.actions {
+.pane-left #inputFileGroup {
+    margin-bottom: 18px;
+}
+
+/* Botão Converter */
+.action-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 14px;
+    justify-content: flex-end; /* Alinha o botão à direita */
+    margin-top: auto; /* Empurra o botão para o final da coluna */
 }
 
+/* --- COLUNA DIREITA --- */
+.pane-right .output-group {
+    flex: 1; /* Faz o grupo crescer para ocupar o espaço vazio */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+#outputText {
+    flex: 1; /* Faz o textarea preencher o grupo */
+    min-height: 250px;
+    white-space: pre-wrap;
+    overflow: auto;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* Botões Copiar e Limpar */
+.output-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    gap: 12px;
+    margin-top: auto; /* Empurra os botões para o final da coluna */
+}
+
+/* --- BOTÕES --- */
 button {
     border: none;
     border-radius: 12px;
-    padding: 12px 18px;
+    padding: 12px 24px;
     cursor: pointer;
     font-weight: 700;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    font-size: 0.95rem;
+    transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 button:hover {
     transform: translateY(-1px);
+    opacity: 0.9;
 }
 
 #convertButton {
-    background: #0f63ff;
+    background: #2563eb;
     color: #ffffff;
 }
 
@@ -179,12 +185,14 @@ button:hover {
     color: #102a43;
 }
 
+/* --- PAINEL DE PREVIEW (PDF) --- */
 .preview-panel {
     border-top: 1px solid #e2e8f0;
     padding-top: 18px;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 18px;
 }
 
 .preview-header {
@@ -201,20 +209,23 @@ button:hover {
 #downloadLink {
     text-decoration: none;
     color: #ffffff;
-    background: #0f63ff;
+    background: #2563eb;
     padding: 10px 14px;
     border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
 }
 
 #pdfPreview {
     width: 100%;
-    min-height: 480px;
+    min-height: 400px;
     border: 1px solid #cbd5e1;
     border-radius: 14px;
 }
 
+/* --- NOTAS / RODAPÉ --- */
 .notes {
-    margin-top: 22px;
+    margin-top: 24px;
     color: #334e68;
 }
 
@@ -230,24 +241,29 @@ button:hover {
     margin-bottom: 8px;
 }
 
+/* --- UTILITÁRIOS --- */
 .hidden,
 .preview-panel[hidden] {
     display: none !important;
 }
 
+/* --- RESPONSIVIDADE --- */
 @media (max-width: 880px) {
     .split-grid {
-        flex-direction: column;
-    }
-
-    .pane-right {
-        max-width: none;
+        grid-template-columns: 1fr; /* Empilha as colunas em telas menores */
+        gap: 24px;
     }
 }
 
 @media (max-width: 640px) {
-    .actions,
+    .action-row,
     .output-actions {
         flex-direction: column;
+        width: 100%;
+    }
+    
+    .action-row button,
+    .output-actions button {
+        width: 100%;
     }
 }
